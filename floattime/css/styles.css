@@ -1,0 +1,470 @@
+/* 默认主题变量（亮色主题） */
+:root {
+    --bg-color: #fff;
+    --text-color: #333;
+    /* --card-bg: #ffffff; */
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --header-border: rgba(0, 0, 0, 0.1);
+    --input-bg: #ffffff;
+    --input-border: #ddd;
+    --input-text: #333;
+    --feature-card-bg: rgba(255, 255, 255, 0.58);
+    --feature-card-hover-bg: rgb(238, 255, 252);
+    --feature-card-border-shadow: rgb(28 27 27 / 36%);
+    --button-bg: #4a4a4a;
+    --button-text: #ffffff;
+    --button-hover: #333333;
+    --chart-bg: #ffffff;
+    --code-bg: #f8f9fa;
+    --code-text: #333;
+    --footer-border: rgba(0, 0, 0, 0.1);
+    --footer-text: #777;
+    --column-tag-bg: #e9ecef;
+    --column-tag-hover: #dee2e6;
+    --column-remove-btn: #ff4d4d;
+    --column-removed-bg: #f8f9fa;
+    --column-removed-text: #6c757d;
+    --column-removed-border: #dee2e6;
+    --column-removed-hover: #e9ecef;
+
+    --custom-input-border: #ddd;
+    --custom-input-bg: #ffffff;
+    --custom-input-text: #333;
+
+    --hover:#f8f9fa;
+}
+
+/* 暗色主题变量 */
+[data-theme="dark"] {
+    --bg-color: #1a1a2e;
+    --text-color: #e6e6e6;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --header-border: rgba(255, 255, 255, 0.1);
+    --input-bg: #333;
+    --input-border: #555;
+    --input-text: #fff;
+    --feature-card-bg: rgba(255, 255, 255, 0.05);
+    --feature-card-hover-bg: rgba(255, 255, 255, 0.1);
+    --feature-card-border-shadow: rgb(255 255 255 / 36%);
+    --button-bg: #4a4a4a;
+    --button-text: #ffffff;
+    --button-hover: #5a5a5a;
+    --chart-bg: rgba(255, 255, 255, 0.05);
+    --code-bg: #2d2d2d;
+    --code-text: #aaa;
+    --footer-border: rgba(255, 255, 255, 0.1);
+    --footer-text: #777;
+    --column-tag-bg: rgba(255, 255, 255, 0.1);
+    --column-tag-hover: rgba(255, 255, 255, 0.15);
+    --column-remove-btn: #ff6b6b;
+    --column-removed-bg: #2d2d2d;
+    --column-removed-text: #aaa;
+    --column-removed-border: #555;
+    --column-removed-hover: #3d3d3d;
+    --custom-input-border: #555;
+    --custom-input-bg: #333;
+    --custom-input-text: #fff;
+
+    --hover:#44445c;
+}
+
+/* 主题切换按钮样式 */
+.theme-toggle {
+    background: var(--button-bg);
+    color: var(--button-text);
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle:hover {
+    background: var(--button-hover);
+    transform: translateY(-2px);
+}
+
+/* 基础样式 */
+/* body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background-color 0.3s, color 0.3s;
+} */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* header样式中的固定颜色值需要改为变量 */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--header-border);
+    /* 原使用rgba(255, 255, 255, 0.1) */
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #00dbde, #fc00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 1px;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+nav a {
+    color: var(--text-color);
+    /* 原使用#ccc */
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+nav a:hover {
+    color: var(--text-color);
+    /* 原使用#fff，这里改为var(--text-color)更合理 */
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #00dbde, #fc00ff);
+    transition: width 0.3s ease;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+/* 确保导航栏正确垂直居中 */
+header nav ul {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+header nav ul li {
+    display: flex;
+    align-items: center;
+}
+
+.hero {
+    text-align: center;
+    padding: 5rem 0;
+    position: relative;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(90deg, #00dbde, #fc00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.2;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto 2.5rem;
+    color: var(--text-color);
+    /* 原使用#aaa */
+    line-height: 1.6;
+}
+
+
+.cta-button {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: linear-gradient(90deg, #00dbde, #fc00ff);
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* .cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+} */
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 5rem 0;
+}
+
+.feature-card {
+    background: var(--feature-card-bg);
+    border-radius: 10px;
+    padding: 2rem;
+    transition: transform 0.3s ease, background 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 0 15px var(--feature-card-border-shadow);
+    /* box-shadow: inset 0 0 15px rgb(255 255 255 / 36%); */
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    background: var(--feature-card-hover-bg);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(90deg, #2db8b877, #fc00ff);
+    -webkit-background-clip: text;
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", sans-serif;
+    filter: drop-shadow(0 0 0 transparent);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.feature-card p {
+    color: var(--text-color);
+    /* 原使用#aaa */
+    line-height: 1.6;
+}
+
+/* footer样式中的固定颜色值需要改为变量 */
+footer {
+    text-align: center;
+    padding: 2rem 0;
+    border-top: 1px solid var(--footer-border);
+    /* 原使用rgba(255, 255, 255, 0.1) */
+    margin-top: 3rem;
+    color: var(--footer-text);
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    nav ul {
+        gap: 1rem;
+    }
+}
+
+
+.section {
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 2rem;
+    backdrop-filter: blur(5px);
+    margin-bottom: 2rem;
+    border: 1px solid var(--header-border);
+}
+
+.plain {
+    background: linear-gradient(90deg, #00000078, #4a4a4a) !important;
+}
+
+[data-theme="dark"] .plain {
+    background: linear-gradient(90deg, #28292978, #716f715c) !important;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background-color 0.3s, color 0.3s;
+    position: relative;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.8rem 1.8rem;
+    background: linear-gradient(90deg, #00dbde, #fc00ff);
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+  .reward-button {
+    background: none;
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 14px;
+    z-index: 1001; /* 提高层级确保在最上层 */
+}
+
+.reward-image-container {
+    display: none;
+    position: absolute;
+    z-index: 9999; /* 提高层级确保在最上层 */
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    margin-top: 35px;
+}
+
+.reward-image-container img {
+    max-width: 350px;
+    height: auto;
+}
+
+.reward-button:hover + .reward-image-container,
+.reward-image-container:hover {
+    display: block;
+}
+
+/* 移动端导航栏优化 */
+@media screen and (max-width: 768px) {
+    /* 使用伪元素替换文字内容 */
+    nav ul li a {
+      font-size: 0;
+      padding: 10px 5px; /* 减少padding */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    nav ul li a::before {
+      font-size: 20px;
+    }
+    
+    nav ul li:nth-child(1) a::before {
+      content: "🏠"; /* 首页 */
+    }
+    
+    nav ul li:nth-child(2) a::before {
+      content: "📂"; /* 工具分类 */
+    }
+    
+    nav ul li:nth-child(3) a::before {
+      content: "⭐"; /* 最新推荐 */
+    }
+    
+    nav ul li:nth-child(4) a::before {
+      content: "ℹ️"; /* 关于 */
+    }
+
+    /* 调整导航项布局 */
+    nav ul {
+      gap: 0;
+      padding: 0 10px; /* 减少容器padding */
+    }
+    
+    nav ul li {
+      flex: 1;
+      text-align: center;
+      margin: 0 2px; /* 减少margin */
+    }
+    
+    /* 调整logo在移动端的大小 */
+    .logo {
+      font-size: 1.5rem;
+    }
+    
+    /* 调整header在移动端的padding */
+    header {
+      padding: 1rem 0;
+    }
+  }
+  
+  /* 进一步优化移动端显示 */
+  @media screen and (max-width: 480px) {
+    nav ul li a {
+      padding: 8px 3px; /* 进一步减少padding */
+    }
+    
+    nav ul li a::before {
+      font-size: 18px; /* 稍微减小图标大小 */
+    }
+    
+    nav ul {
+      padding: 0 5px; /* 进一步减少容器padding */
+    }
+    
+    nav ul li {
+      margin: 0 1px; /* 进一步减少margin */
+    }
+  }
+.typing {
+    color: var(--text-color); 
+    /* margin: 0 auto; */
+    font-size: 1.5em;
+    width: 30em;
+    height: 1.5em;
+    border-right: 1px solid transparent;
+    animation: typing 2s steps(42, end), blink-caret .75s step-end infinite;
+    font-family: Consolas, Monaco;
+    word-break: break-all;
+    overflow: hidden;
+}
+/* 打印效果 */
+@keyframes typing {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 30em;
+    }
+}
+
+/* 光标 */
+@keyframes blink-caret {
+
+    from,
+    to {
+        border-color: transparent;
+    }
+
+    50% {
+        border-color: currentColor;
+    }
+}

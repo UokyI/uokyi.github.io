@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>floatTime · 悬浮倒计时 | ZTechTools</title>
+<meta name="description" content="floatTime — Android 桌面悬浮倒计时工具：圆形悬浮图标、可拖动、震动提醒，极简好用。">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/background-effects.css">
+<style>
+:root{
+  --ft-ink:#1b2233;
+  --ft-dim:#55607e;
+  --ft-line:rgba(20,30,70,.14);
+  --ft-glass:rgba(255,255,255,.62);
+  --ft-nav:rgba(255,255,255,.72);
+  --ft-grid:rgba(30,45,90,.08);
+  --ft-glow1:rgba(255,140,50,.18);
+  --ft-glow2:rgba(0,200,255,.12);
+  --ft-glow3:rgba(255,80,120,.10);
+  --ft-title-grad:linear-gradient(92deg,#e85d26 0%,#f59e0b 40%,#ef4444 70%,#ec4899 100%);
+  --ft-shadow:rgba(30,40,80,.16);
+  --ft-phone-glow:rgba(255,140,50,.14);
+  --accent:#f97316;
+  --accent2:#facc15;
+  --radius:22px;
+}
+html[data-theme="dark"]{
+  --ft-ink:#e8ecff;
+  --ft-dim:#9aa3c7;
+  --ft-line:rgba(255,255,255,.12);
+  --ft-glass:rgba(255,255,255,.05);
+  --ft-nav:rgba(8,10,22,.62);
+  --ft-grid:rgba(255,255,255,.07);
+  --ft-glow1:rgba(255,140,50,.22);
+  --ft-glow2:rgba(0,200,255,.14);
+  --ft-glow3:rgba(255,80,120,.10);
+  --ft-title-grad:linear-gradient(92deg,#fff 5%,#fbbf24 35%,#f87171 65%,#fb7185 100%);
+  --ft-shadow:rgba(0,0,0,.6);
+  --ft-phone-glow:rgba(255,140,50,.13);
+  --accent:#fb923c;
+  --accent2:#fde047;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  color:var(--ft-ink);overflow-x:hidden;line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+::selection{background:rgba(249,115,22,.45)}
+a{color:inherit}
+body{background:transparent!important}
+body::before{display:none!important}
+
+.bg-fx{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-color:#e6e9f0;
+  background-image:
+    radial-gradient(1100px 700px at 12% -10%, var(--ft-glow1), transparent 60%),
+    radial-gradient(900px 620px at 95% 12%, var(--ft-glow2), transparent 55%),
+    radial-gradient(1000px 800px at 50% 115%, var(--ft-glow3), transparent 60%),
+    linear-gradient(-45deg,#fef3e2,#fde68a,#fed7aa,#fef9c3,#fff7ed);
+  background-size:auto,auto,auto,600% 600%;
+  background-position:0 0,0 0,0 0,0% 50%;
+  animation:bgShift 18s ease infinite;
+}
+html[data-theme="dark"] .bg-fx{
+  background-color:#05060f;
+  background-image:
+    radial-gradient(1100px 700px at 12% -10%, var(--ft-glow1), transparent 60%),
+    radial-gradient(900px 620px at 95% 12%, var(--ft-glow2), transparent 55%),
+    radial-gradient(1000px 800px at 50% 115%, var(--ft-glow3), transparent 60%),
+    linear-gradient(-45deg,#05060f,#0a0d1f,#0b1026,#080b18,#120a24);
+}
+@keyframes bgShift{
+  0%{background-position:0 0,0 0,0 0,0% 50%}
+  50%{background-position:0 0,0 0,0 0,100% 50%}
+  100%{background-position:0 0,0 0,0 0,0% 50%}
+}
+.grid-overlay{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:linear-gradient(var(--ft-grid) 1px,transparent 1px),linear-gradient(90deg,var(--ft-grid) 1px,transparent 1px);
+  background-size:56px 56px;
+  mask-image:radial-gradient(ellipse 90% 70% at 50% 0%, #000 30%, transparent 75%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 0%, #000 30%, transparent 75%);
+}
+#particles{position:fixed;inset:0;z-index:-1;display:block}
+
+.wrap{max-width:1140px;margin:0 auto;padding:0 28px}
+section{padding:96px 0;position:relative}
+
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:var(--ft-nav);border-bottom:1px solid var(--ft-line);transition:background .3s;
+}
+.nav-inner{max-width:1140px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;gap:18px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.05rem;letter-spacing:.4px;text-decoration:none;color:var(--ft-ink)}
+.brand .dot{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:.95rem;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 0 22px rgba(249,115,22,.55);color:#fff}
+.nav-links{margin-left:auto;display:flex;gap:22px;align-items:center}
+.nav-links a{color:var(--ft-dim);text-decoration:none;font-size:.92rem;transition:color .2s}
+.nav-links a:hover{color:var(--ft-ink)}
+nav a::after{display:none!important}
+
+.theme-toggle{
+  width:40px;height:40px;border-radius:12px;padding:0;
+  background:var(--ft-glass);border:1px solid var(--ft-line);
+  color:var(--ft-ink);font-size:1.05rem;backdrop-filter:blur(6px);
+}
+.theme-toggle:hover{transform:translateY(-2px);background:var(--ft-glass);box-shadow:0 8px 22px var(--ft-shadow)}
+
+.btn{
+  display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:12px;
+  font-weight:650;font-size:.94rem;text-decoration:none;border:1px solid var(--ft-line);
+  color:var(--ft-ink);background:var(--ft-glass);transition:.25s;cursor:pointer;backdrop-filter:blur(6px);
+}
+.btn:hover{transform:translateY(-2px);border-color:var(--ft-line);box-shadow:0 10px 30px var(--ft-shadow)}
+.btn-primary{
+  background:linear-gradient(135deg,#f97316 0%,#ef4444 55%,#ec4899 100%);
+  color:#fff;border:none;box-shadow:0 8px 30px rgba(249,115,22,.4);
+}
+.btn-primary:hover{box-shadow:0 12px 42px rgba(249,115,22,.5)}
+.btn-ghost{background:transparent}
+
+.ft-hero{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;
+  text-align:center;padding:250px 0 80px;border-bottom:none!important;margin:0;
+}
+.ft-hero .wrap{margin:auto 0}
+html[data-theme="dark"] body header{background:rgb(0 0 0 / 50%)}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:999px;
+  border:1px solid var(--ft-line);background:var(--ft-glass);font-size:.85rem;color:var(--ft-dim);
+  backdrop-filter:blur(8px);margin-top:60px;margin-bottom:40px;
+}
+.badge .pulse{width:8px;height:8px;border-radius:50%;background:#f97316;box-shadow:0 0 0 0 rgba(249,115,22,.7);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(249,115,22,0)}100%{box-shadow:0 0 0 0 rgba(249,115,22,0)}}
+.ft-hero h1{
+  font-size:clamp(2.6rem,7.5vw,5.4rem);font-weight:900;letter-spacing:-1.5px;line-height:1.08;margin:0;
+  background:var(--ft-title-grad);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  -webkit-text-fill-color:transparent;background-size:200% auto;animation:shine 7s linear infinite;
+}
+@keyframes shine{to{background-position:200% center}}
+.ft-hero .sub{margin:22px auto 0;font-size:clamp(1rem,2.4vw,1.35rem);color:var(--ft-dim);min-height:2.1em;max-width:760px}
+.ft-hero .sub .caret{display:inline-block;width:2px;height:1.15em;background:var(--accent2);margin-left:4px;vertical-align:-.2em;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.cta{margin-top:32px;display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+.chips{margin-top:34px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.chip{
+  font-size:.8rem;color:var(--ft-dim);padding:7px 15px;border-radius:999px;
+  border:1px solid var(--ft-line);background:var(--ft-glass);letter-spacing:.3px;
+}
+.scroll-hint{position:fixed;bottom:34px;left:50%;transform:translateX(-50%);color:var(--ft-dim);font-size:.78rem;letter-spacing:2px;animation:floaty 2.2s ease-in-out infinite;transition:opacity .5s ease;z-index:40}
+.scroll-hint.gone{opacity:0;pointer-events:none}
+.scroll-hint .arrow{display:block;text-align:center;font-size:1.1rem;margin-top:2px}
+@keyframes floaty{50%{transform:translate(-50%,8px)}}
+
+.sec-head{text-align:center;margin-bottom:58px}
+.sec-head .tag{font-size:.8rem;letter-spacing:3px;color:var(--accent2);text-transform:uppercase}
+.sec-head h2{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:800;margin-top:10px;letter-spacing:-.5px;background:none;-webkit-text-fill-color:currentColor;color:var(--ft-ink)}
+.sec-head p{color:var(--ft-dim);margin-top:12px;max-width:640px;margin-inline:auto}
+
+.showcase{display:flex;gap:44px;justify-content:center;flex-wrap:wrap;perspective:1200px}
+.phone{
+  width:min(300px,80vw);border-radius:38px;padding:12px;position:relative;
+  background:linear-gradient(160deg,#232742,#0c0e1d 70%);
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 0 0 2px #000 inset,0 24px 70px var(--ft-shadow),0 0 80px var(--ft-phone-glow);
+  transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s;
+}
+.phone:hover{transform:translateY(-10px) rotateX(2deg);box-shadow:0 0 0 2px #000 inset,0 34px 90px var(--ft-shadow),0 0 110px rgba(249,115,22,.22)}
+.phone .notch{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:92px;height:22px;border-radius:999px;background:#000;z-index:3}
+.phone .screen{
+  border-radius:28px;overflow:hidden;background:#000;aspect-ratio:9/19.2;position:relative;
+  display:flex;align-items:center;justify-content:center;
+}
+.phone video{width:100%;height:100%;object-fit:cover;display:block}
+.phone .glow{position:absolute;inset:0;border-radius:28px;pointer-events:none;background:radial-gradient(120% 60% at 50% 0%,var(--ft-phone-glow),transparent 60%)}
+.phone-cap{margin-top:34px;text-align:center}
+.phone-cap h3{font-size:1.12rem;font-weight:750;color:var(--ft-ink)}
+.phone-cap p{color:var(--ft-dim);font-size:.88rem;margin-top:5px}
+
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px}
+.fcard{
+  position:relative;padding:30px 26px;border-radius:var(--radius);
+  background:var(--ft-glass);border:1px solid var(--ft-line);
+  backdrop-filter:blur(10px);overflow:hidden;transition:transform .35s,box-shadow .35s,border-color .35s;
+  transform-style:preserve-3d;
+}
+.fcard:hover{transform:translateY(-8px);border-color:rgba(249,115,22,.5);box-shadow:0 18px 50px var(--ft-shadow),0 0 40px rgba(249,115,22,.16)}
+.fcard .ico{
+  width:52px;height:52px;border-radius:15px;display:grid;place-items:center;font-size:1.55rem;margin-bottom:20px;
+  background:linear-gradient(135deg,rgba(249,115,22,.28),rgba(250,204,21,.18));
+  border:1px solid var(--ft-line);box-shadow:0 6px 22px rgba(249,115,22,.3);
+}
+.fcard h3{font-size:1.08rem;margin-bottom:10px;font-weight:750;color:var(--ft-ink)}
+.fcard p{color:var(--ft-dim);font-size:.92rem}
+.fcard .beam{position:absolute;top:0;left:-70%;width:55%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.09),transparent);transform:skewX(-18deg);transition:left .7s ease}
+.fcard:hover .beam{left:130%}
+
+.final{
+  text-align:center;padding:120px 0 130px;
+  background:radial-gradient(800px 400px at 50% 100%,var(--ft-glow1),transparent 70%);
+}
+.final h2{font-size:clamp(1.8rem,4.4vw,3rem);font-weight:900;letter-spacing:-.5px;color:var(--ft-ink);background:none;-webkit-text-fill-color:currentColor}
+.final p{color:var(--ft-dim);margin:18px 0 38px}
+footer{
+  border-top:1px solid var(--ft-line);padding:14px 0 18px;
+  color:var(--ft-dim);font-size:.82rem;text-align:center;margin-top:0!important;
+}
+html[data-theme="dark"] body footer{background:rgb(0 0 0 / 50%)}
+footer a{color:var(--accent2);text-decoration:none}
+footer a:hover{color:var(--ft-ink)}
+footer .sep{margin:0 8px;opacity:.4}
+.foot-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;row-gap:4px}
+
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}
+
+@media (max-width:760px){
+  .nav-links .hide-sm{display:none}
+  .nav-inner{padding:12px 16px;gap:12px}
+  .nav-links{gap:12px}
+  .ft-hero{padding:210px 0 70px}
+  .showcase{gap:30px}
+  .phone{width:min(250px,72vw)}
+  section{padding:70px 0}
+}
+</style>
+<script>
+if(!localStorage.getItem('theme')){localStorage.setItem('theme','dark');document.documentElement.setAttribute('data-theme','dark');}
+</script>
+</head>
+<body>
+
+<div class="bg-fx"></div>
+<div class="grid-overlay"></div>
+<canvas id="particles"></canvas>
+
+<nav>
+  <div class="nav-inner">
+    <a class="brand" href="#top"><span class="dot">F</span>floatTime</a>
+    <div class="nav-links">
+      <a href="#demo" class="hide-sm">演示</a>
+      <a href="#features">功能</a>
+      <a href="https://zehong.tech/" class="hide-sm" title="返回 ZTechTools 主页">← ZTechTools</a>
+      <button id="themeToggle" class="theme-toggle" aria-label="切换主题">🌙</button>
+      <a href="#download" class="btn btn-primary">下载 APK</a>
+    </div>
+  </div>
+</nav>
+
+<header class="ft-hero" id="top">
+  <div class="wrap" style="display:flex;flex-direction:column;align-items:center">
+    <div class="badge"><span class="pulse"></span> v1.0.0 现已发布 · Android · 开源免费</div>
+    <h1>悬浮倒计时</h1>
+    <p class="sub" id="typewriter"></p>
+    <div class="cta">
+      <a class="btn btn-primary" href="https://github.com/UokyI/floatTime/releases/download/v1.0.0/app-release.apk">📦 立即下载 APK</a>
+      <a class="btn btn-ghost" href="https://github.com/UokyI/floatTime" target="_blank" rel="noopener">GitHub 源码 ↗</a>
+    </div>
+    <div class="chips">
+      <span class="chip">Android</span>
+      <span class="chip">悬浮窗</span>
+      <span class="chip">倒计时</span>
+      <span class="chip">震动提醒</span>
+      <span class="chip">前台服务</span>
+      <span class="chip">MIT License</span>
+    </div>
+  </div>
+  <div class="scroll-hint">SCROLL<span class="arrow">▾</span></div>
+</header>
+
+<section id="demo">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="tag">Live Demo</div>
+      <h2>上手即用 · 极简体验</h2>
+      <p>真实手机录屏：从开启悬浮窗到完成一次倒计时，一切都在指尖完成。</p>
+    </div>
+    <div class="showcase">
+      <div class="phone reveal d1">
+        <div class="notch"></div>
+        <div class="screen">
+          <video src="setup.mp4" muted loop playsinline preload="metadata" controls></video>
+          <div class="glow"></div>
+        </div>
+        <div class="phone-cap">
+          <h3>开启与配置</h3>
+          <p>授予权限 · 设置任务名称与时间</p>
+        </div>
+      </div>
+      <div class="phone reveal d2">
+        <div class="notch"></div>
+        <div class="screen">
+          <video src="usage.mp4" muted loop playsinline preload="metadata" controls></video>
+          <div class="glow"></div>
+        </div>
+        <div class="phone-cap">
+          <h3>使用与历史</h3>
+          <p>倒计时运行 · 震动提醒 · 历史记录</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="tag">Features</div>
+      <h2>核心功能</h2>
+      <p>专注一件事，把倒计时做到极致简单。</p>
+    </div>
+    <div class="feature-grid">
+      <div class="fcard reveal">
+        <span class="beam"></span>
+        <div class="ico">🕐</div>
+        <h3>圆形悬浮图标</h3>
+        <p>轻巧的圆形悬浮窗，可自由拖动到屏幕任意位置，不遮挡主要内容，随时可见。</p>
+      </div>
+      <div class="fcard reveal d1">
+        <span class="beam"></span>
+        <div class="ico">⚙️</div>
+        <h3>长按快速设置</h3>
+        <p>长按悬浮图标弹出设置弹窗，输入任务名称和定时分钟数，点击开始即可倒计时。</p>
+      </div>
+      <div class="fcard reveal d2">
+        <span class="beam"></span>
+        <div class="ico">📳</div>
+        <h3>震动提醒</h3>
+        <p>倒计时归零时手机自动震动提醒，不错过任何一个重要时刻。</p>
+      </div>
+      <div class="fcard reveal d3">
+        <span class="beam"></span>
+        <div class="ico">📋</div>
+        <h3>历史记录</h3>
+        <p>自动记录每次倒计时任务，随时回顾已完成的事项，养成时间管理习惯。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="download">
+  <div class="wrap reveal">
+    <h2>现在，开始你的每一次专注</h2>
+    <p>一键下载安装，无需账号、无需联网，倒计时由你掌控。</p>
+    <div class="cta" style="justify-content:center">
+      <a class="btn btn-primary" style="padding:15px 34px;font-size:1.05rem" href="https://github.com/UokyI/floatTime/releases/download/v1.0.0/app-release.apk">⬇ 下载 floatTime v1.0.0（APK）</a>
+      <a class="btn btn-ghost" style="padding:15px 30px;font-size:1.05rem" href="https://github.com/UokyI/floatTime/releases" target="_blank" rel="noopener">Release 页面 ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-row">
+      © 2026 floatTime · <a href="https://github.com/UokyI/floatTime" target="_blank" rel="noopener">MIT 协议</a> 开源
+      <span class="sep">·</span>
+      <a href="https://zehong.tech/">大泽编程杂录 (ZTechTools)</a>
+      <span class="sep">·</span>
+      <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">豫ICP备2025140245号-1</a>
+      <span class="sep">·</span>
+      <a href="https://beian.mps.gov.cn/#/query/webSearch?code=41167102000114" target="_blank" rel="noopener">豫公网安备41167102000114号</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/theme.js"></script>
+<script>
+/* ============ 粒子背景 ============ */
+(() => {
+  const c = document.getElementById('particles'), x = c.getContext('2d');
+  let w, h, dots = [], mouse = {x:-9999, y:-9999};
+  const isDark = () => document.documentElement.getAttribute('data-theme') === 'dark';
+  const palettes = {
+    dark: [
+      {c:'255,180,120', core:'255,220,180'},
+      {c:'249,115,22', core:'253,186,116'},
+      {c:'250,204,21', core:'254,240,138'}
+    ],
+    light: [
+      {c:'234,88,12', core:'251,191,36'},
+      {c:'220,38,38', core:'252,165,165'},
+      {c:'217,119,6', core:'253,224,71'}
+    ]
+  };
+  const pick = () => palettes[isDark() ? 'dark' : 'light'][Math.floor(Math.random()*3)];
+  const COUNT = () => Math.min(110, Math.floor(w * h / 16000));
+  function resize(){
+    w = c.width = innerWidth; h = c.height = innerHeight;
+    dots = Array.from({length: COUNT()}, () => {
+      const big = Math.random() < .12;
+      return {
+        x: Math.random()*w, y: Math.random()*h,
+        vx:(Math.random()-.5)*.3, vy:(Math.random()-.5)*.3,
+        r: big ? 1.7 + Math.random()*1.1 : .6 + Math.random()*.9,
+        col: pick(),
+        tw: Math.random()*6.283, ts: .35 + Math.random()*.85
+      };
+    });
+  }
+  resize(); addEventListener('resize', resize);
+  addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+  new MutationObserver(() => {}).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+  (function loop(){
+    const t = performance.now() / 1000;
+    x.clearRect(0,0,w,h);
+    for (const d of dots){
+      d.x += d.vx; d.y += d.vy;
+      if (d.x<0||d.x>w) d.vx*=-1;
+      if (d.y<0||d.y>h) d.vy*=-1;
+      const dm = (d.x-mouse.x)**2 + (d.y-mouse.y)**2;
+      if (dm < 150*150) {
+        d.x += (d.x-mouse.x)/dm*220; d.y += (d.y-mouse.y)/dm*220;
+      }
+      const a = .55 + .35 * Math.sin(t * d.ts + d.tw);
+      x.beginPath();
+      x.arc(d.x, d.y, d.r * 2.6, 0, 7);
+      x.fillStyle = `rgba(${d.col.c},${a * .13})`;
+      x.fill();
+      x.beginPath();
+      x.arc(d.x, d.y, d.r, 0, 7);
+      x.fillStyle = `rgba(${d.col.core},${a * .8})`;
+      x.fill();
+    }
+    for (let i=0;i<dots.length;i++) for (let j=i+1;j<dots.length;j++){
+      const A=dots[i], B=dots[j], dx=A.x-B.x, dy=A.y-B.y, ds=dx*dx+dy*dy;
+      if (ds < 100*100){
+        const k = 1 - ds/(100*100);
+        x.beginPath();
+        x.moveTo(A.x,A.y); x.lineTo(B.x,B.y);
+        x.strokeStyle = `rgba(${A.col.c},${.10 * k})`;
+        x.lineWidth = .5; x.stroke();
+      }
+    }
+    requestAnimationFrame(loop);
+  })();
+})();
+
+/* ============ 打字机 ============ */
+(() => {
+  const el = document.getElementById('typewriter');
+  const lines = [
+    'Android 桌面悬浮倒计时 · 极简好用',
+    '长按设置任务 · 圆形悬浮窗自由拖动',
+    '倒计时归零震动提醒 · 不错过每一刻',
+    '自动记录历史 · 养成时间管理习惯'
+  ];
+  let li = 0, ci = 0, del = false;
+  (function tick(){
+    const t = lines[li];
+    el.innerHTML = t.slice(0, ci) + '<span class="caret"></span>';
+    if (!del){
+      if (ci < t.length){ ci++; return setTimeout(tick, 62); }
+      del = true; return setTimeout(tick, 2100);
+    }
+    if (ci > 0){ ci--; return setTimeout(tick, 26); }
+    del = false; li = (li + 1) % lines.length; setTimeout(tick, 350);
+  })();
+})();
+
+/* ============ 滚动入场 ============ */
+(() => {
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+  }), {threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+})();
+
+/* ============ 滚动提示 ============ */
+(() => {
+  const hint = document.querySelector('.scroll-hint');
+  if(!hint) return;
+  const onScroll = () => hint.classList.toggle('gone', window.scrollY > window.innerHeight * 0.5);
+  addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+
+/* ============ 视频自动播放 ============ */
+(() => {
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    const v = e.target;
+    if (e.isIntersecting) v.play().catch(()=>{});
+    else v.pause();
+  }), {threshold:.35});
+  document.querySelectorAll('.phone video').forEach(v => io.observe(v));
+})();
+
+/* ============ 卡片 3D 倾斜 ============ */
+(() => {
+  document.querySelectorAll('.fcard').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const rx = ((e.clientY - r.top)/r.height - .5) * -7;
+      const ry = ((e.clientX - r.left)/r.width  - .5) *  7;
+      card.style.transform = `perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-8px)`;
+    });
+    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+  });
+})();
+</script>
+</body>
+</html>
