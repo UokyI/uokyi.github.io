@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy · floatTime Floating Countdown</title>
+<meta name="description" content="floatTime Floating Countdown privacy policy: we collect no personal information, no internet connection, no data upload — everything stays on your device.">
+<link rel="stylesheet" href="css/background-effects.css">
+<style>
+:root{
+  --ft-ink:#1b2233;
+  --ft-dim:#55607e;
+  --ft-line:rgba(20,30,70,.14);
+  --ft-glass:rgba(255,255,255,.62);
+  --ft-nav:rgba(255,255,255,.72);
+  --ft-grid:rgba(30,45,90,.08);
+  --ft-glow1:rgba(255,140,50,.18);
+  --ft-glow2:rgba(0,200,255,.12);
+  --ft-glow3:rgba(255,80,120,.10);
+  --ft-shadow:rgba(30,40,80,.16);
+  --accent:#f97316;
+  --accent2:#facc15;
+  --radius:22px;
+}
+html[data-theme="dark"]{
+  --ft-ink:#e8ecff;
+  --ft-dim:#9aa3c7;
+  --ft-line:rgba(255,255,255,.12);
+  --ft-glass:rgba(255,255,255,.05);
+  --ft-nav:rgba(8,10,22,.62);
+  --ft-grid:rgba(255,255,255,.07);
+  --ft-glow1:rgba(255,140,50,.22);
+  --ft-glow2:rgba(0,200,255,.14);
+  --ft-glow3:rgba(255,80,120,.10);
+  --ft-shadow:rgba(0,0,0,.6);
+  --accent:#fb923c;
+  --accent2:#fde047;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  color:var(--ft-ink);overflow-x:hidden;line-height:1.75;-webkit-font-smoothing:antialiased;
+  background:transparent!important;
+}
+::selection{background:rgba(249,115,22,.45)}
+a{color:inherit}
+.bg-fx{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-color:#e6e9f0;
+  background-image:
+    radial-gradient(1100px 700px at 12% -10%, var(--ft-glow1), transparent 60%),
+    radial-gradient(900px 620px at 95% 12%, var(--ft-glow2), transparent 55%),
+    radial-gradient(1000px 800px at 50% 115%, var(--ft-glow3), transparent 60%),
+    linear-gradient(-45deg,#fef3e2,#fde68a,#fed7aa,#fef9c3,#fff7ed);
+}
+html[data-theme="dark"] .bg-fx{
+  background-color:#05060f;
+  background-image:
+    radial-gradient(1100px 700px at 12% -10%, var(--ft-glow1), transparent 60%),
+    radial-gradient(900px 620px at 95% 12%, var(--ft-glow2), transparent 55%),
+    radial-gradient(1000px 800px at 50% 115%, var(--ft-glow3), transparent 60%),
+    linear-gradient(-45deg,#05060f,#0a0d1f,#0b1026,#080b18,#120a24);
+}
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:var(--ft-nav);border-bottom:1px solid var(--ft-line);
+}
+.nav-inner{max-width:820px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:18px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.05rem;letter-spacing:.4px;text-decoration:none;color:var(--ft-ink)}
+.brand .dot{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:.95rem;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 0 22px rgba(249,115,22,.55);color:#fff}
+.lang-switch{margin-left:auto;font-size:.9rem;color:var(--ft-dim)}
+.lang-switch a{color:var(--ft-accent,var(--accent));text-decoration:none;font-weight:600}
+.lang-switch a:hover{text-decoration:underline}
+.lang-switch .current{color:var(--ft-ink);font-weight:700}
+.theme-toggle{
+  width:40px;height:40px;border-radius:12px;padding:0;cursor:pointer;
+  background:var(--ft-glass);border:1px solid var(--ft-line);
+  color:var(--ft-ink);font-size:1.05rem;backdrop-filter:blur(6px);
+}
+.theme-toggle:hover{transform:translateY(-2px);box-shadow:0 8px 22px var(--ft-shadow)}
+
+main{max-width:820px;margin:0 auto;padding:120px 24px 80px}
+.doc-head{margin-bottom:44px}
+.doc-head .tag{font-size:.8rem;letter-spacing:3px;color:var(--accent2);text-transform:uppercase}
+.doc-head h1{font-size:clamp(1.8rem,4.4vw,2.6rem);font-weight:900;margin-top:10px;letter-spacing:-.5px}
+.doc-head p{color:var(--ft-dim);margin-top:12px;font-size:.9rem}
+.doc-card{
+  background:var(--ft-glass);border:1px solid var(--ft-line);border-radius:var(--radius);
+  backdrop-filter:blur(10px);padding:36px 38px;
+}
+.doc-card h2{font-size:1.12rem;font-weight:800;margin:30px 0 12px;color:var(--ft-ink)}
+.doc-card h2:first-child{margin-top:0}
+.doc-card p{color:var(--ft-dim);font-size:.94rem;margin-bottom:10px}
+.doc-card ul{color:var(--ft-dim);font-size:.94rem;padding-left:22px;margin-bottom:12px}
+.doc-card li{margin-bottom:6px}
+.doc-card strong{color:var(--ft-ink)}
+.doc-card a{color:var(--accent);text-decoration:none;font-weight:600}
+.doc-card a:hover{text-decoration:underline}
+.doc-card code{font-family:Consolas,monospace;font-size:.88em;background:var(--ft-glass);border:1px solid var(--ft-line);border-radius:5px;padding:1px 6px}
+.doc-foot{margin-top:44px;color:var(--ft-dim);font-size:.86rem;text-align:center}
+
+footer{border-top:1px solid var(--ft-line);padding:14px 0 18px;color:var(--ft-dim);font-size:.82rem;text-align:center}
+html[data-theme="dark"] body footer{background:rgb(0 0 0 / 50%)}
+footer a{color:var(--accent2);text-decoration:none}
+footer a:hover{color:var(--ft-ink)}
+footer .sep{margin:0 8px;opacity:.4}
+.foot-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;row-gap:4px}
+
+@media (max-width:600px){
+  .nav-inner{padding:12px 16px;gap:12px}
+  main{padding:104px 16px 60px}
+  .doc-card{padding:26px 22px}
+}
+</style>
+<script>
+if(!localStorage.getItem('theme')){localStorage.setItem('theme','dark');document.documentElement.setAttribute('data-theme','dark');}
+</script>
+</head>
+<body>
+
+<div class="bg-fx"></div>
+
+<nav>
+  <div class="nav-inner">
+    <a class="brand" href="index.html"><span class="dot">F</span>floatTime</a>
+    <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+    <div class="lang-switch">
+      <span class="current">English</span> · <a href="privacy-policy-zh.html">中文</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="doc-head">
+    <div class="tag">Privacy Policy</div>
+    <h1>Privacy Policy</h1>
+    <p>Last updated: August 30, 2026 · Effective date: August 30, 2026</p>
+  </div>
+
+  <div class="doc-card">
+    <h2>1. Overview</h2>
+    <p>This policy applies to the <strong>floatTime (Floating Countdown)</strong> app and its official website. We respect and protect your privacy. <strong>floatTime is a fully offline local tool: it collects no personal information, never connects to the internet, and never uploads or stores any data on a server.</strong></p>
+
+    <h2>2. Information We Collect</h2>
+    <p><strong>We do not collect any personal information.</strong> No account registration, phone number, or email is required to use this app.</p>
+
+    <h2>3. Data Storage and Use</h2>
+    <ul>
+      <li>Settings such as your <strong>countdown task names, durations, floating bubble appearance colors and sizes</strong> are stored only in a private directory on your device (<code>getFilesDir()</code>), used solely for the app to function normally.</li>
+      <li><strong>Usage history</strong> is likewise stored only locally on your device.</li>
+      <li>The data above is <strong>never transmitted over the network</strong> and <strong>cannot</strong> be read or collected by any third party. Uninstalling the app removes all of it.</li>
+    </ul>
+
+    <h2>4. Permissions</h2>
+    <p>To provide the floating countdown feature, the app requests the following permissions, each used only for its corresponding core function:</p>
+    <ul>
+      <li><strong>Display over other apps (SYSTEM_ALERT_WINDOW)</strong>: to show a draggable floating bubble on your screen.</li>
+      <li><strong>Foreground service permission</strong>: to keep the countdown running in the background and display the floating bubble.</li>
+      <li><strong>Notification permission</strong>: to display the persistent service notification.</li>
+      <li><strong>Vibration permission (VIBRATE)</strong>: to vibrate when the countdown finishes.</li>
+    </ul>
+
+    <h2>5. Third-Party Services</h2>
+    <p>This app <strong>does not integrate any ad SDKs, analytics SDKs, push SDKs, or third-party libraries</strong>, and does not share or trade any data with third parties.</p>
+
+    <h2>6. In-App Privacy Policy Link</h2>
+    <p>You can also view the online version of this policy from the App's "About" dialog or the "Privacy Policy" entry in the drawer menu: <a href="https://uokyi.github.io/floattime/privacy-policy-en.html">https://uokyi.github.io/floattime/privacy-policy-en.html</a></p>
+
+    <h2>7. Children's Privacy</h2>
+    <p>This app performs no data collection and has no account system, making it suitable for users of all ages.</p>
+
+    <h2>8. Changes to This Policy</h2>
+    <p>If this policy changes, we will update this page and revise the effective date at the top. Material changes will be announced through app version release notes and similar channels.</p>
+
+    <h2>9. Contact Us</h2>
+    <p>If you have any questions about this Privacy Policy, please contact us on GitHub: <a href="https://github.com/UokyI/floatTime" target="_blank" rel="noopener">github.com/UokyI/floatTime</a></p>
+  </div>
+
+  <div class="doc-foot">Disclaimer: floatTime states facts based on its real features; this page does not constitute any false promise to users.</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-row">
+      © 2026 floatTime
+      <span class="sep">·</span>
+      <a href="privacy-policy.html">Privacy Policy</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/theme.js"></script>
+</body>
+</html>
