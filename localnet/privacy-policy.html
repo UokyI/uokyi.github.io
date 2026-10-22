@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy - LAN Drop (局域网快传)</title>
+<meta name="description" content="Privacy policy for LAN Drop (局域网快传), a browser extension that receives phone-to-desktop files over WebRTC. No personal data is collected.">
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.7; max-width: 800px; margin: 0 auto; padding: 40px 20px; color: #333; }
+  h1 { color: #2c3440; border-bottom: 2px solid #e4eef2; padding-bottom: 12px; }
+  h2 { color: #1f7a5a; margin-top: 32px; }
+  p, li { font-size: 15px; }
+  ul { padding-left: 24px; }
+  code { background: #eef6f2; border-radius: 4px; padding: 1px 5px; }
+  .last-updated { color: #888; font-size: 13px; }
+  .lang { font-size: 13px; margin-bottom: 8px; }
+  .lang a { color: #1f7a5a; text-decoration: none; font-weight: 600; }
+  .lang a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<div class="lang"><a href="privacy-policy-zh.html">中文</a> · <strong>English</strong></div>
+
+<h1>Privacy Policy</h1>
+<p class="last-updated">Last updated: October 22, 2026</p>
+
+<p>LAN Drop (known in Chinese as 局域网快传) ("we", "our", or "this extension") is a browser extension for Microsoft Edge that lets you send files from your phone to your computer. You scan a QR code with your phone, and the file is transferred peer-to-peer to your computer over a WebRTC DataChannel. This privacy policy explains what data we collect and how we use it.</p>
+
+<h2>Data Collection</h2>
+<p><strong>We do NOT collect any personal data.</strong></p>
+<p>This extension has no account system, no analytics, no advertising, and no tracking of any kind. It does not read, modify, or track the web pages you visit.</p>
+
+<h2>How the Extension Works</h2>
+<p>The extension runs a receiver panel on your computer. When you start receiving, it generates a QR code containing a random session code and the address of the upload page. Your phone opens that page and sends the selected files to your computer over a <strong>WebRTC DataChannel</strong> — a direct, peer-to-peer connection. The file content itself is never uploaded to any server.</p>
+
+<h2>Data Storage</h2>
+<p>The extension uses Chrome's local storage (<code>chrome.storage.local</code>) to save your signaling server settings, including:</p>
+<ul>
+  <li>Selected signaling server preset</li>
+  <li>Server host, port, path, and key (for self-hosted PeerServer)</li>
+  <li>WebSocket URL (for a self-hosted <code>signal.ashx</code>)</li>
+  <li>Phone upload page URL</li>
+</ul>
+<p>These settings remain strictly on your local device and are never uploaded or shared. The extension also uses <code>chrome.storage.session</code> to remember the panel tab id so it can focus the existing panel instead of opening a new one; this value is cleared when the tab closes.</p>
+<p>Files you receive are temporarily buffered in the browser's Origin Private File System (OPFS), then saved to your normal Downloads folder. Temporary copies are cleaned up after the download completes, and any leftovers are removed the next time you open the panel.</p>
+
+<h2>Permissions</h2>
+<ul>
+  <li><strong>storage</strong> - Used solely to save your signaling settings and panel tab id locally.</li>
+  <li><strong>downloads</strong> - Used solely to save received files to your Downloads folder.</li>
+</ul>
+<p>The extension requests <strong>no <code>host_permissions</code></strong>. It cannot access or read web content in the background.</p>
+
+<h2>Third-Party Services</h2>
+<p>To establish a WebRTC connection, the extension and the phone page must exchange connection details through a <strong>signaling server</strong>. The extension ships with the following options, and you can switch between them in the panel:</p>
+<ul>
+  <li><strong>zhong.tech</strong> (default) - A WebSocket signaling endpoint self-hosted by the project author and currently provided free of charge, without any availability guarantee.</li>
+  <li><strong>PeerJS Cloud</strong> - The free public service at <code>0.peerjs.com</code>, operated by a third party.</li>
+  <li><strong>Self-hosted PeerServer</strong> - A server you deploy yourself.</li>
+  <li><strong>Self-hosted signal.ashx</strong> - A WebSocket service you deploy yourself.</li>
+</ul>
+<p>WebRTC also uses a public STUN server (<code>stun.l.google.com</code>) to discover network addresses. No file content is sent to the signaling or STUN servers. The extension does not use any third-party analytics or tracking tools.</p>
+
+<h2>What the Signaling Server Can See</h2>
+<p>To connect two devices, the signaling server relays the session code, the SDP session description, and ICE candidates (which may include local or public IP addresses of your devices). It <strong>cannot</strong> see the content of your files, because files travel directly between the two devices. For sensitive scenarios, please use a self-hosted signaling server.</p>
+
+<h2>Children's Privacy</h2>
+<p>This extension does not knowingly collect any data from children or any other users.</p>
+
+<h2>Changes to This Policy</h2>
+<p>We may update this privacy policy from time to time. Any changes will be reflected on this page with an updated date.</p>
+
+<h2>Contact</h2>
+<p>If you have questions about this privacy policy, please contact us via GitHub: <a href="https://github.com/UokyI">github.com/UokyI</a></p>
+
+</body>
+</html>

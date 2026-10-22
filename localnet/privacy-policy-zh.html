@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>隐私政策 - 局域网快传（LAN Drop）</title>
+<meta name="description" content="局域网快传（LAN Drop）浏览器扩展隐私政策：不收集任何个人信息，文件通过 WebRTC 点对点直传。">
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Roboto, sans-serif; line-height: 1.8; max-width: 800px; margin: 0 auto; padding: 40px 20px; color: #333; }
+  h1 { color: #2c3440; border-bottom: 2px solid #e4eef2; padding-bottom: 12px; }
+  h2 { color: #1f7a5a; margin-top: 32px; }
+  p, li { font-size: 15px; }
+  ul { padding-left: 24px; }
+  code { background: #eef6f2; border-radius: 4px; padding: 1px 5px; }
+  .last-updated { color: #888; font-size: 13px; }
+  .lang { font-size: 13px; margin-bottom: 8px; }
+  .lang a { color: #1f7a5a; text-decoration: none; font-weight: 600; }
+  .lang a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<div class="lang"><strong>中文</strong> · <a href="privacy-policy.html">English</a></div>
+
+<h1>隐私政策</h1>
+<p class="last-updated">更新日期：2026 年 10 月 22 日</p>
+
+<p>局域网快传（LAN Drop，以下简称“本扩展”）是一款 Microsoft Edge 浏览器扩展，用于将手机上的文件发送到电脑。您用手机扫描二维码后，文件会通过 WebRTC DataChannel 点对点传输到电脑。本政策说明我们收集哪些数据以及如何使用这些数据。</p>
+
+<h2>一、数据收集</h2>
+<p><strong>我们不收集任何个人信息。</strong></p>
+<p>本扩展没有账号体系，不包含统计分析、广告或任何形式的跟踪，也不会读取、修改或追踪您访问的网页内容。</p>
+
+<h2>二、工作原理</h2>
+<p>本扩展在电脑上运行接收面板。开启接收后，会生成包含随机会话码与上传页地址的二维码。手机打开该上传页后，通过 <strong>WebRTC DataChannel</strong> 直接与电脑建立点对点连接并发送所选文件。文件内容不会上传到任何服务器。</p>
+
+<h2>三、数据存储</h2>
+<p>本扩展使用浏览器本地存储（<code>chrome.storage.local</code>）保存您的信令服务器设置，包括：</p>
+<ul>
+  <li>所选信令服务器预设</li>
+  <li>自建 PeerServer 的主机、端口、路径与 Key</li>
+  <li>自建 <code>signal.ashx</code> 的 WebSocket 地址</li>
+  <li>手机上传页地址</li>
+</ul>
+<p>上述设置仅保存在您的本地设备，不会上传或共享。本扩展还会使用 <code>chrome.storage.session</code> 记录面板标签页的 id，以便再次点击图标时聚焦已有面板而非重复打开；该值会在标签页关闭时清除。</p>
+<p>接收到的文件会先临时缓存在浏览器的源私有文件系统（OPFS）中，然后保存到您正常的“下载”目录。临时副本会在下载完成后清理，异常残留会在下次打开面板时删除。</p>
+
+<h2>四、权限说明</h2>
+<ul>
+  <li><strong>storage</strong>：仅用于在本地保存信令设置与面板标签页 id。</li>
+  <li><strong>downloads</strong>：仅用于将接收到的文件保存到“下载”目录。</li>
+</ul>
+<p>本扩展未申请任何 <code>host_permissions</code>，无法在后台访问或读取网页内容。</p>
+
+<h2>五、第三方服务</h2>
+<p>建立 WebRTC 连接时，扩展与手机页面需要通过<strong>信令服务器</strong>交换连接信息。本扩展内置以下选项，可在面板中切换：</p>
+<ul>
+  <li><strong>zhong.tech</strong>（默认）：由项目作者自行搭建的 WebSocket 信令服务，目前免费提供，可用性不作保证。</li>
+  <li><strong>PeerJS 官方云</strong>：由第三方运营的免费公共服务 <code>0.peerjs.com</code>。</li>
+  <li><strong>自建 PeerServer</strong>：您自行部署的服务器。</li>
+  <li><strong>自建 signal.ashx</strong>：您自行部署的 WebSocket 服务。</li>
+</ul>
+<p>WebRTC 还会使用公共 STUN 服务器（<code>stun.l.google.com</code>）来发现网络地址。任何文件内容都不会发送给信令服务器或 STUN 服务器。本扩展不使用任何第三方统计分析或跟踪工具。</p>
+
+<h2>六、信令服务器可见的信息</h2>
+<p>为建立连接，信令服务器会转发会话码、SDP 会话描述以及 ICE 候选（其中可能包含设备的局域网或公网 IP 地址）。由于文件在两台设备之间直接传输，信令服务器<strong>无法</strong>获取文件内容。敏感场景请使用自建信令服务器。</p>
+
+<h2>七、未成年人保护</h2>
+<p>本扩展不会有意收集儿童或任何其他用户的数据。</p>
+
+<h2>八、政策变更</h2>
+<p>我们可能不时更新本隐私政策。任何变更都会在本页面更新并修改更新日期。</p>
+
+<h2>九、联系我们</h2>
+<p>如果您对本隐私政策有任何疑问，请通过 GitHub 联系我们：<a href="https://github.com/UokyI">github.com/UokyI</a></p>
+
+</body>
+</html>
