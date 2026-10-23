@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy - WebCut (网页截图标注)</title>
+<meta name="description" content="Privacy policy for WebCut, a browser extension that captures and annotates webpage elements locally. No personal data is collected.">
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.7; max-width: 800px; margin: 0 auto; padding: 40px 20px; color: #333; }
+  h1 { color: #2c3440; border-bottom: 2px solid #e4e8ff; padding-bottom: 12px; }
+  h2 { color: #2447ff; margin-top: 32px; }
+  p, li { font-size: 15px; }
+  ul { padding-left: 24px; }
+  code { background: #eef0ff; border-radius: 4px; padding: 1px 5px; }
+  .last-updated { color: #888; font-size: 13px; }
+  .lang { font-size: 13px; margin-bottom: 8px; }
+  .lang a { color: #2447ff; text-decoration: none; font-weight: 600; }
+  .lang a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<div class="lang"><a href="privacy-policy-zh.html">中文</a> · <strong>English</strong></div>
+
+<h1>Privacy Policy</h1>
+<p class="last-updated">Last updated: October 23, 2026</p>
+
+<p>WebCut (known in Chinese as 网页截图标注) ("we", "our", or "this extension") is a browser extension for Microsoft Edge that captures and annotates elements on web pages. You can pick any element, capture its complete content (automatically scrolling and stitching tall elements), and mark it up with arrows, boxes, text, and pixelation. This privacy policy explains what data we collect and how we use it.</p>
+
+<h2>Data Collection</h2>
+<p><strong>We do NOT collect any personal data.</strong></p>
+<p>This extension has no account system, no analytics, no advertising, and no tracking of any kind. It does not read, modify, or track the web pages you visit except when you explicitly invoke it to capture an element. Screenshots and annotations are processed locally and are never uploaded.</p>
+
+<h2>How the Extension Works</h2>
+<p>WebCut runs entirely in your browser. When you click the extension icon, use the right-click menu, or press the keyboard shortcut, the extension temporarily accesses the active tab through the <code>activeTab</code> permission and injects an element picker. You hover over the page to highlight an element and click to capture it.</p>
+<p>If the selected element is taller than the viewport, the extension scrolls the page in segments, captures each segment, stitches them into one image, and then restores your original scroll position. The captured image opens in a local editor, where you can add annotations and export a PNG or copy it to the clipboard. The extension does not run on websites in the background.</p>
+
+<h2>Data Storage</h2>
+<p>The extension uses Chrome's local storage (<code>chrome.storage.local</code>) to save only:</p>
+<ul>
+  <li>The id of the most recent capture, so the “Last capture” button can reopen it</li>
+  <li>Your editor preferences (corner style, spacing, background, shadow, annotation color, weight, and text size)</li>
+</ul>
+<p>Screenshots and annotations are stored as Blobs in the browser's IndexedDB on your local device. The extension periodically removes old captures. Uninstalling WebCut or clearing the extension's site data removes this local data. None of it is uploaded, synchronized, or shared.</p>
+
+<h2>Permissions</h2>
+<ul>
+  <li><strong>activeTab</strong> - Grants temporary access to the current tab only when you explicitly invoke WebCut from the toolbar, context menu, or keyboard shortcut.</li>
+  <li><strong>scripting</strong> - Used solely to inject the element picker into the current page.</li>
+  <li><strong>contextMenus</strong> - Used solely to register the “WebCut: pick an element to capture” right-click menu item.</li>
+  <li><strong>storage</strong> - Used solely to remember the last capture id and your editor preferences locally.</li>
+  <li><strong>clipboardWrite</strong> - Used only when you click “Copy” in the editor, to write the annotated PNG to the clipboard. The extension never reads clipboard contents.</li>
+</ul>
+<p>The extension requests <strong>no <code>host_permissions</code></strong>, so it cannot access or read web content in the background.</p>
+
+<h2>Data Transmission</h2>
+<p>This extension does not transmit any data to any server. There is no cloud service, no telemetry, no tracking, no analytics, and no third-party communication of any kind. It does not use remote code; all scripts, styles, fonts, and icons are bundled with the extension.</p>
+
+<h2>Third-Party Services</h2>
+<p>WebCut does not use any third-party analytics, advertising, tracking, cloud storage, or external APIs.</p>
+
+<h2>Scope and Limitations</h2>
+<p>WebCut cannot run on browser-internal or protected pages, such as <code>edge://</code>, <code>chrome://</code>, the add-on store, or the built-in PDF viewer. Elements inside cross-origin iframes cannot be picked directly. When stitching tall elements, fixed or sticky navigation bars may appear in more than one segment; this is a visual limitation of the capture process, not a data collection feature.</p>
+
+<h2>Children's Privacy</h2>
+<p>This extension does not knowingly collect any data from children or any other users.</p>
+
+<h2>Changes to This Policy</h2>
+<p>We may update this privacy policy from time to time. Any changes will be reflected on this page with an updated date.</p>
+
+<h2>Contact</h2>
+<p>If you have questions about this privacy policy, please contact us via GitHub: <a href="https://github.com/UokyI">github.com/UokyI</a></p>
+
+</body>
+</html>

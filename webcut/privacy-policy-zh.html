@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>隐私政策 - WebCut 网页截图标注</title>
+<meta name="description" content="WebCut 网页截图标注浏览器扩展隐私政策：不收集任何个人信息，截图与标注仅在本地处理。">
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Roboto, sans-serif; line-height: 1.8; max-width: 800px; margin: 0 auto; padding: 40px 20px; color: #333; }
+  h1 { color: #2c3440; border-bottom: 2px solid #e4e8ff; padding-bottom: 12px; }
+  h2 { color: #2447ff; margin-top: 32px; }
+  p, li { font-size: 15px; }
+  ul { padding-left: 24px; }
+  code { background: #eef0ff; border-radius: 4px; padding: 1px 5px; }
+  .last-updated { color: #888; font-size: 13px; }
+  .lang { font-size: 13px; margin-bottom: 8px; }
+  .lang a { color: #2447ff; text-decoration: none; font-weight: 600; }
+  .lang a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<div class="lang"><strong>中文</strong> · <a href="privacy-policy.html">English</a></div>
+
+<h1>隐私政策</h1>
+<p class="last-updated">更新日期：2026 年 10 月 23 日</p>
+
+<p>WebCut 网页截图标注（以下简称“本扩展”）是一款 Microsoft Edge 浏览器扩展，用于截取并标注网页元素。您可以点选页面上的任意元素，截取该元素的完整内容（元素高于屏幕时自动滚动拼接），再用箭头、方框、文字、马赛克等完成标注。本政策说明我们收集哪些数据以及如何使用这些数据。</p>
+
+<h2>一、数据收集</h2>
+<p><strong>我们不收集任何个人信息。</strong></p>
+<p>本扩展没有账号体系，不包含统计分析、广告或任何形式的跟踪。除您主动调用扩展截取元素外，本扩展不会读取、修改或追踪您访问的网页内容。截图与标注均在本机处理，不会上传。</p>
+
+<h2>二、工作原理</h2>
+<p>WebCut 完全在您的浏览器中运行。当您点击扩展图标、使用右键菜单或按下快捷键时，本扩展通过 <code>activeTab</code> 权限临时访问当前标签页，并注入元素选择器。您在页面上悬停以高亮元素，单击即可截图。</p>
+<p>如果所选元素高于视口，本扩展会分段滚动页面、逐段截图并拼接为一张完整图片，完成后恢复您原来的滚动位置。截图会在本地编辑器中打开，您可以添加标注并导出 PNG 或复制到剪贴板。本扩展不会在后台访问网站。</p>
+
+<h2>三、数据存储</h2>
+<p>本扩展使用浏览器本地存储（<code>chrome.storage.local</code>）仅保存：</p>
+<ul>
+  <li>最近一次截图的 id，用于“最近一张”按钮重新打开</li>
+  <li>编辑器偏好（圆角、留白、背景、投影、标注颜色、粗细与字号）</li>
+</ul>
+<p>截图与标注以 Blob 形式保存在本机浏览器的 IndexedDB 中。本扩展会定期清理旧截图。卸载 WebCut 或清除扩展数据即可删除这些本地数据。所有数据都不会上传、同步或共享。</p>
+
+<h2>四、权限说明</h2>
+<ul>
+  <li><strong>activeTab</strong>：仅在您通过工具栏、右键菜单或快捷键主动调用 WebCut 时，临时访问当前标签页。</li>
+  <li><strong>scripting</strong>：仅用于将元素选择器注入当前页面。</li>
+  <li><strong>contextMenus</strong>：仅用于注册「WebCut：选择元素截图」右键菜单项。</li>
+  <li><strong>storage</strong>：仅用于在本地保存最近截图 id 与编辑器偏好。</li>
+  <li><strong>clipboardWrite</strong>：仅在您点击「复制」时，将标注后的 PNG 写入剪贴板。本扩展不会读取剪贴板内容。</li>
+</ul>
+<p>本扩展未申请任何 <code>host_permissions</code>，无法在后台访问或读取网页内容。</p>
+
+<h2>五、数据传输</h2>
+<p>本扩展不会向任何服务器传输数据。没有云服务、遥测、跟踪、统计分析或任何形式的第三方通信。本扩展不使用远程代码，所有脚本、样式、字体与图标都打包在扩展内。</p>
+
+<h2>六、第三方服务</h2>
+<p>WebCut 不使用任何第三方统计分析、广告、跟踪、云存储或外部 API。</p>
+
+<h2>七、适用范围与限制</h2>
+<p>WebCut 无法在 <code>edge://</code>、<code>chrome://</code>、扩展商店、内置 PDF 阅读器等浏览器受保护页面运行；跨域 iframe 内部元素无法直接点选。拼接长元素时，固定定位或吸顶的导航栏可能在多个分段中重复出现；这是截图拼接的视觉限制，不涉及数据收集。</p>
+
+<h2>八、未成年人保护</h2>
+<p>本扩展不会有意收集儿童或任何其他用户的数据。</p>
+
+<h2>九、政策变更</h2>
+<p>我们可能不时更新本隐私政策。任何变更都会在本页面更新并修改更新日期。</p>
+
+<h2>十、联系我们</h2>
+<p>如果您对本隐私政策有任何疑问，请通过 GitHub 联系我们：<a href="https://github.com/UokyI">github.com/UokyI</a></p>
+
+</body>
+</html>
